@@ -2,4 +2,9 @@ INSERT INTO users (name,phone_number) VALUES ('Alice','111-111-1111');
 INSERT INTO users (name,phone_number) VALUES ('Kira','222-222-2222');
 INSERT INTO users (name,phone_number) VALUES ('Eva','333-333-3333');
 INSERT INTO users (name,phone_number) VALUES ('Speed','444-444-4444');
-
+INSERT INTO users (name,phone_number) VALUES ('Andrew','555-555-5555');
+INSERT INTO users (name,phone_number) VALUES ('Amy','666-666-7777');
+INSERT INTO users (name,phone_number) VALUES ('Lora','777-777-7777');
+INSERT INTO users (name,phone_number) VALUES ('James','888-888-8888');
+INSERT INTO users (name,phone_number) VALUES ('Smith','999-999-9999');
+INSERT INTO users (name,phone_number) VALUES ('Gary','100-100-1000');
