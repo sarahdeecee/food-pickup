@@ -13,11 +13,11 @@ module.exports = (db) => {
     let query = `SELECT * FROM widgets`;
     console.log(query);
     db.query(query)
-      .then(data => {
+      .then((data) => {
         const widgets = data.rows;
         res.json({ widgets });
       })
-      .catch(err => {
+      .catch((err) => {
         res
           .status(500)
           .json({ error: err.message });
