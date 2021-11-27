@@ -7,6 +7,12 @@
 
 const express = require('express');
 const router  = express.Router();
+const app = express();
+
+app.get("/", (req, res) => {
+  const templateVars = {};
+  return res.render("index", templateVars);
+});
 
 module.exports = (db) => {
   router.get("/", (req, res) => {

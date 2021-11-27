@@ -15,3 +15,37 @@ body {
     rgba(163, 208, 219, 1) 100%
   );
 }
+// Container of all displayed items
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 75px;
+}
+// For items to be in grid pattern
+// .items {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   text-align: center;
+// }
+.items {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+// For each item picture
+img.food {
+  width: 150px;
+  height: 150px;
+  margin: 0.5em;
+}
