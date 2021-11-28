@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY NOT NULL,
-  customer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  order_date DATE NOT NULL,
-  progress VARCHAR(255),
+  customer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  order_timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
+  progress VARCHAR(255) DEFAULT 'Pending',
   subtotal INTEGER,
   tax INTEGER
 );
