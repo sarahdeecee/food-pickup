@@ -19,10 +19,12 @@ body {
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   margin-top: 75px;
 }
+
 // For items to be in grid pattern
 // .items {
 //   display: flex;
@@ -31,21 +33,34 @@ body {
 //   justify-content: center;
 //   text-align: center;
 // }
-.items {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+
+// Section before the header
+section {
   width: 100%;
+  padding: 0.5em
 }
-.item {
+
+// Contains the item (image, name/description, price)
+div.items {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  margin: 0 0.5em 0.5em 0.5em;
 }
+
+// Contains the image and name/description
+span.item {
+  display: flex;
+  flex-direction: row;
+}
+
 // For each item picture
 img.food {
   width: 150px;
   height: 150px;
-  margin: 0.5em;
+  padding-right: 0.5em;
+}
+
+.price {
+
 }
