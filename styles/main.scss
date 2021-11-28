@@ -22,7 +22,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-top: 75px;
+  margin: 75px 0 75px 0;
 }
 
 // For items to be in grid pattern
@@ -61,6 +61,23 @@ img.food {
   padding-right: 0.5em;
 }
 
-.price {
+// Contains food name and description
+.foodtext {
+  display: flex;
+  flex-direction: column;
+}
 
+// Food name
+.foodname {
+  font-size: 24pt;
+}
+
+// Food description
+.fooddescription {
+  font-size: 18pt;
+}
+
+// Food price
+.price {
+  font-size: 24pt;
 }
