@@ -91,5 +91,24 @@ module.exports = (db) => {
     }
   };
 
+  // PUT: /orders/[id]
+  // Edit order progress
+  router.put("/:orderId", (req, res) => {
+    const query = `
+      UPDATE orders
+      SET progress = $1
+      WHERE id = $2
+    `;
+    const values = [req.body.progress, req.params.orderId];
+
+    db.query(query, values)
+      .then((dbres) => {
+        res.status(200).send(dbres.rows[0]);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
   return router;
 };
