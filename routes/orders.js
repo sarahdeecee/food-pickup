@@ -126,7 +126,6 @@ module.exports = (db) => {
     const counts = {};
     items.forEach((item) => {
       counts[item] = (counts[item] || 0) + 1;
-      items = counts;
     });
 
     return counts;
