@@ -9,6 +9,48 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  // GET: /orders/queue
+  // Gets the queue of orders
+  router.get("/queue", (req, res) => {
+    const query = `
+      SELECT orders.id, customer_id, order_timestamp, progress, array_agg(food_id) as items
+      FROM orders
+      JOIN order_foods ON orders.id = order_foods.order_id
+      WHERE progress NOT LIKE 'Completed'
+      GROUP BY orders.id
+      ORDER BY order_timestamp
+    `;
+    const values = [];
+
+    db.query(query, values)
+      .then((dbres) => {
+        res.status(200).send(dbres.rows);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
+  // GET: /orders/[id]
+  router.get("/:orderId", (req, res) => {
+    const query = `
+      SELECT orders.*, array_agg(food_id) as items
+      FROM orders
+      JOIN order_foods ON orders.id = order_foods.order_id
+      WHERE orders.id = $1
+      GROUP BY orders.id
+    `;
+    const values = [req.params.orderId];
+
+    db.query(query, values)
+      .then((dbres) => {
+        res.status(200).send(dbres.rows[0]);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
   // POST: /orders
   // Submits an order
   router.post("/", (req, res) => {
@@ -48,5 +90,6 @@ module.exports = (db) => {
         });
     }
   };
+
   return router;
 };
