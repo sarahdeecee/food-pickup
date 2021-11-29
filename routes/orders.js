@@ -24,6 +24,10 @@ module.exports = (db) => {
 
     db.query(query)
       .then((data) => {
+        data.rows.forEach((row) => {
+          row.items = countItems(row.items);
+        });
+
         res.status(200).send(data.rows);
       })
       .catch((err) => {
@@ -49,6 +53,8 @@ module.exports = (db) => {
         if (data.rows.length === 0) {
           return res.status(404).send();
         }
+
+        data.rows[0].items = countItems(data.rows[0].items);
         res.status(200).send(data.rows[0]);
       })
       .catch((err) => {
@@ -114,6 +120,17 @@ module.exports = (db) => {
         res.status(400).send(err.message);
       });
   });
+
+  // count each item in the array
+  const countItems = (items) => {
+    const counts = {};
+    items.forEach((item) => {
+      counts[item] = (counts[item] || 0) + 1;
+      items = counts;
+    });
+
+    return counts;
+  };
 
   return router;
 };
