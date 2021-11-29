@@ -60,4 +60,6 @@ $(document).ready(() => {
   };
 
   loadOrders();
+  // refresh queue every 5 seconds
+  setInterval(loadOrders, 5000);
 });
