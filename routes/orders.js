@@ -20,9 +20,8 @@ module.exports = (db) => {
       GROUP BY orders.id
       ORDER BY order_timestamp
     `;
-    const values = [];
 
-    db.query(query, values)
+    db.query(query)
       .then((dbres) => {
         res.status(200).send(dbres.rows);
       })
