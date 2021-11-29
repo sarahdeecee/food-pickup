@@ -37,6 +37,7 @@ module.exports = (db) => {
   });
 
   // GET: /api/orders/[id]
+  // Gets an order by id
   router.get("/api/orders/:orderId", (req, res) => {
     const query = `
       SELECT orders.*, array_agg(food_items.name) as items
@@ -57,6 +58,33 @@ module.exports = (db) => {
 
         data.rows[0].items = countItems(data.rows[0].items);
         res.status(200).send(data.rows[0]);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
+  // GET: /api/orders/user/[id]
+  // Get all orders from a user
+  router.get("/api/orders/user/:userId", (req, res) => {
+    const query = `
+      SELECT orders.id, users.name as customer, order_timestamp, progress, array_agg(food_items.name) as items
+      FROM orders
+      JOIN order_foods ON orders.id = order_foods.order_id
+      JOIN food_items ON order_foods.food_id = food_items.id
+      JOIN users ON orders.customer_id = users.id
+      WHERE orders.customer_id = $1
+      GROUP BY orders.id, users.name
+      ORDER BY order_timestamp
+    `;
+    const values = [req.params.userId];
+
+    db.query(query, values)
+      .then((data) => {
+        data.rows.forEach((row) => {
+          row.items = countItems(row.items);
+        });
+        res.status(200).send(data.rows);
       })
       .catch((err) => {
         res.status(400).send(err.message);
