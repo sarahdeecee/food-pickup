@@ -35,7 +35,7 @@ $(document).ready(() => {
               </div>
             </div>
             <div class="col-4">
-              <button type="button" class="btn btn-primary">Mark as Completed</button>
+              <button type="button" class="btn btn-primary" id="mark-complete">Mark as Completed</button>
             </div>
           </div>
         </div>
@@ -66,6 +66,17 @@ $(document).ready(() => {
         data: JSON.stringify({ "progress": $(this).text() }),
       });
     });
+
+    // complete button behaviour
+    $('#mark-complete').click(function() {
+      const orderId = $(this).closest(".card").find("#order-id").text();
+      $.ajax(`/api/orders/edit/${orderId}`, {
+        method: "PUT",
+        contentType: 'application/json',
+        data: JSON.stringify({ "progress": "Completed" }),
+        success: loadOrders
+      });
+    });
   };
 
   const loadOrders = () => {
@@ -74,6 +85,6 @@ $(document).ready(() => {
   };
 
   loadOrders();
-  // refresh queue every 5 seconds
-  // setInterval(loadOrders, 5000);
+  // refresh queue every 7 seconds
+  setInterval(loadOrders, 7000);
 });
