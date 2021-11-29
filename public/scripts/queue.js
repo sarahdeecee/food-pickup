@@ -14,7 +14,7 @@ $(document).ready(() => {
     const html = `
       <div class="card">
         <div class="card-header">
-          Order #${escape(data.id)} - ${escape(data.order_timestamp)}
+          Order #${data.id} - ${timeago.format(data.order_timestamp)}
         </div>
         <div class="card-body">
           <p>Customer: ${escape(data.customer)}</p>
