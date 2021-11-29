@@ -22,8 +22,8 @@ module.exports = (db) => {
     `;
 
     db.query(query)
-      .then((dbres) => {
-        res.status(200).send(dbres.rows);
+      .then((data) => {
+        res.status(200).send(data.rows);
       })
       .catch((err) => {
         res.status(400).send(err.message);
@@ -42,8 +42,12 @@ module.exports = (db) => {
     const values = [req.params.orderId];
 
     db.query(query, values)
-      .then((dbres) => {
-        res.status(200).send(dbres.rows[0]);
+      .then((data) => {
+        // check if order doesn't exist
+        if (data.rows.length === 0) {
+          return res.status(404).send();
+        }
+        res.status(200).send(data.rows[0]);
       })
       .catch((err) => {
         res.status(400).send(err.message);
@@ -61,9 +65,9 @@ module.exports = (db) => {
     const values = [req.body.user_id, req.body.subtotal, req.body.tax];
 
     db.query(query, values)
-      .then((dbres) => {
-        console.log(dbres.rows);
-        insertOrderFoods(dbres.rows[0].id, req.body.items, res);
+      .then((data) => {
+        console.log(data.rows);
+        insertOrderFoods(data.rows[0].id, req.body.items, res);
       })
       .catch((err) => {
         console.log('query error:', err.message);
@@ -80,7 +84,7 @@ module.exports = (db) => {
     for (const foodId of foodIds) {
       const values = [orderId, foodId];
       db.query(query, values)
-        .then((dbres) => {
+        .then((data) => {
           res.status(200).send();
         })
         .catch((err) => {
@@ -101,8 +105,8 @@ module.exports = (db) => {
     const values = [req.body.progress, req.params.orderId];
 
     db.query(query, values)
-      .then((dbres) => {
-        res.status(200).send(dbres.rows[0]);
+      .then((data) => {
+        res.status(200).send(data.rows[0]);
       })
       .catch((err) => {
         res.status(400).send(err.message);
