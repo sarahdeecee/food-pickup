@@ -132,5 +132,9 @@ module.exports = (db) => {
     return counts;
   };
 
+  router.get("/queue/page", (req, res) => {
+    res.render("queue");
+  });
+
   return router;
 };
