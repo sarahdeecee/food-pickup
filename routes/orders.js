@@ -13,9 +13,10 @@ module.exports = (db) => {
   // Gets the queue of orders
   router.get("/queue", (req, res) => {
     const query = `
-      SELECT orders.id, customer_id, order_timestamp, progress, array_agg(food_id) as items
+      SELECT orders.id, customer_id, order_timestamp, progress, array_agg(food_items.name) as items
       FROM orders
       JOIN order_foods ON orders.id = order_foods.order_id
+      JOIN food_items ON order_foods.food_id = food_items.id
       WHERE progress NOT LIKE 'Completed'
       GROUP BY orders.id
       ORDER BY order_timestamp
@@ -33,9 +34,10 @@ module.exports = (db) => {
   // GET: /orders/[id]
   router.get("/:orderId", (req, res) => {
     const query = `
-      SELECT orders.*, array_agg(food_id) as items
+      SELECT orders.*, array_agg(food_items.name) as items
       FROM orders
       JOIN order_foods ON orders.id = order_foods.order_id
+      JOIN food_items ON order_foods.food_id = food_items.id
       WHERE orders.id = $1
       GROUP BY orders.id
     `;
