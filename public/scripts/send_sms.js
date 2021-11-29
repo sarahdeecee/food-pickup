@@ -14,4 +14,4 @@ client.messages
      to: '+1' //enter number to send message to
    })
   .then(message => console.log(message.sid))
-  .catch(err => console.error(er+r.message));
+  .catch(err => console.error(err.message));
