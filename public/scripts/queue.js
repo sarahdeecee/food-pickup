@@ -14,7 +14,7 @@ $(document).ready(() => {
     const html = `
       <div class="card">
         <div class="card-header">
-          Order #${data.id} - ${timeago.format(data.order_timestamp)}
+          Order #<span id="order-id">${data.id}</span> - ${timeago.format(data.order_timestamp)}
         </div>
         <div class="card-body">
           <p>Customer: ${escape(data.customer)}</p>
@@ -50,8 +50,22 @@ $(document).ready(() => {
     for (const order of orders) {
       const $tweet = createOrderElement(order);
       $('.queue-container').append($tweet);
-      console.log(order);
     }
+
+    // progress dropdown behavior
+    $('.dropdown-item').click(function() {
+      const $button = $(this).closest(".dropdown").children("button");
+      $button.text($(this).text());
+
+      // set put request
+      const orderId = $(this).closest(".card").find("#order-id").text();
+      console.log($(this).text());
+      $.ajax(`/api/orders/edit/${orderId}`, {
+        method: "PUT",
+        contentType: 'application/json',
+        data: JSON.stringify({ "progress": $(this).text() }),
+      });
+    });
   };
 
   const loadOrders = () => {
@@ -61,5 +75,5 @@ $(document).ready(() => {
 
   loadOrders();
   // refresh queue every 5 seconds
-  setInterval(loadOrders, 5000);
+  // setInterval(loadOrders, 5000);
 });

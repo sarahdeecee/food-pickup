@@ -103,15 +103,16 @@ module.exports = (db) => {
     }
   };
 
-  // PUT: /orders/[id]
+  // PUT: /orders/edit/[id]
   // Edit order progress
-  router.put("/:orderId", (req, res) => {
+  router.put("/edit/:orderId", (req, res) => {
     const query = `
       UPDATE orders
       SET progress = $1
       WHERE id = $2
     `;
     const values = [req.body.progress, req.params.orderId];
+    console.log(values);
 
     db.query(query, values)
       .then((data) => {
