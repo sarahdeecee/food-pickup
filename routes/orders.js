@@ -9,9 +9,9 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  // GET: /orders/queue
+  // GET: /api/orders/queue
   // Gets the queue of orders
-  router.get("/queue", (req, res) => {
+  router.get("/api/orders/queue", (req, res) => {
     const query = `
       SELECT orders.id, users.name as customer, order_timestamp, progress, array_agg(food_items.name) as items
       FROM orders
@@ -36,8 +36,8 @@ module.exports = (db) => {
       });
   });
 
-  // GET: /orders/[id]
-  router.get("/:orderId", (req, res) => {
+  // GET: /api/orders/[id]
+  router.get("/api/orders/:orderId", (req, res) => {
     const query = `
       SELECT orders.*, array_agg(food_items.name) as items
       FROM orders
@@ -63,9 +63,9 @@ module.exports = (db) => {
       });
   });
 
-  // POST: /orders
+  // POST: /api/orders
   // Submits an order
-  router.post("/", (req, res) => {
+  router.post("/api/orders", (req, res) => {
     const query = `
       INSERT INTO orders (customer_id, subtotal, tax)
       VALUES ($1, $2, $3)
@@ -103,15 +103,16 @@ module.exports = (db) => {
     }
   };
 
-  // PUT: /orders/[id]
+  // PUT: /api/orders/edit/[id]
   // Edit order progress
-  router.put("/:orderId", (req, res) => {
+  router.put("/api/orders/edit/:orderId", (req, res) => {
     const query = `
       UPDATE orders
       SET progress = $1
       WHERE id = $2
     `;
     const values = [req.body.progress, req.params.orderId];
+    console.log(values);
 
     db.query(query, values)
       .then((data) => {
@@ -131,6 +132,10 @@ module.exports = (db) => {
 
     return counts;
   };
+
+  router.get("/orders/queue", (req, res) => {
+    res.render("queue");
+  });
 
   return router;
 };
