@@ -29,18 +29,19 @@ VALUES ('Miso Soup',        'Japanese soybean paste soup with mushrooms',      '
 ('Salmon',    'Salmon',                   'sushi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/sushi_aburi_salmon.png',    500, 5),
 ('Tai',       'Tilapia',                  'sushi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/sushi_tai.png',             500, 5),
 
-('Soba',             'Warm soba served in broth',                             'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 500, 10),
-('Kakiage Soba',     'Warm soba served in broth with fried mixed vegetables', 'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 600, 10),
-('Tsukimi Soba',     'Warm soba served in broth topped with an egg',          'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 600, 10),
-('Matcha Mori Soba', 'Cold matcha soba served cold with dipping sauce',       'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 500, 10),
-('Udon',             'Hot udon soup',                                         'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 500, 10),
-('Zaru Udon',        'Cold udon noodles with dipping sauce',                  'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 500, 10),
-('Simmered Udon',    'Hot udon soup with vegetables and egg',                 'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 600, 10),
-('Nikusui Udon',     'Hot udon soup with beef',                               'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 600, 10),
+('Soba',             'Warm soba served in broth',                             'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/soba_kake.png', 500, 10),
+('Kakiage Soba',     'Warm soba served in broth with fried mixed vegetables', 'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_kakiage_soba.png', 600, 10),
+('Tsukimi Soba',     'Warm soba served in broth topped with an egg',          'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/soba_tsukimi.png', 600, 10),
+('Matcha Mori Soba', 'Cold matcha soba served cold with dipping sauce',       'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_soba_chasoba.png', 500, 10),
+('Udon',             'Hot udon soup',                                         'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_udon_kake.png', 500, 10),
+('Zaru Udon',        'Cold udon noodles with dipping sauce',                  'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_udon_zaru.png', 500, 10),
+('Simmered Udon',    'Hot udon soup with vegetables and egg',                 'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_misonikomi_udon.png', 600, 10),
+('Nikusui Udon',     'Hot udon soup with beef',                               'noodles', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_nikusui.png', 600, 10),
 
-('Chicken Don',    'Grilled chicken with egg and vegetables on rice', 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 1500, 15),
-('Beef Don',       'Beef with egg and vegetables on rice',            'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 1800, 15),
-('Pork Katsu Don', 'Breaded fried pork cutlet on rice',               'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 1800, 15),
-('Unagi Don',      'Blow-torched barbecued eel on rice',              'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 2000, 15),
-('Oyako Don',      'Chicken and egg simmered in sauce over rice',     'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 1500, 15),
-('Yasai Ten Don',  'Tempura vegetables with sauce over rice',         'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/', 1500, 15);
+('Chicken Don',    'Grilled chicken with egg and vegetables on rice',    'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_yakitoridon.png', 1500, 15),
+('Beef Don',       'Beef with egg and vegetables on rice',               'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_gyudon.png', 1800, 15),
+('Pork Katsu Don', 'Breaded fried pork cutlet on rice',                  'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_katsudon.png', 1800, 15),
+('Unagi Don',      'Blow-torched barbecued eel on rice',                 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_unadon.png', 2000, 15),
+('Oyako Don',      'Chicken and egg simmered in sauce over rice',        'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_oyakodon.png', 1500, 15),
+('Ten Don',        'Tempura vegetables and shrimp with sauce over rice', 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_tendon.png', 1500, 15);
+('Ebi Ten Don',    'Tempura shrimp with sauce over rice',                'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/tendon_ebi.png', 1500, 15);
