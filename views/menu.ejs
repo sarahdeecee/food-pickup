@@ -18,16 +18,10 @@
 </head>
 
 <body>
-  <header>
-    <nav>
-      <div id="title">Todai Restaurant</div>
-      <div id="navbar">
-        <span>Menu</span>
-      </div>
-    </nav>
-  </header>
+  <%- include('partials/_header') %>
   <!-- Main content here -->
-  <div class="container" style="padding-top: 50px;">
+  <div class="container">
+    <h2>Menu</h2><br>
     <% for(let item of foodItems) { %>
       <div class="card mb-3" style="max-width: 500px;">
         <div class=" row g-0">
