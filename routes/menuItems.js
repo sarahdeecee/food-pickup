@@ -13,7 +13,6 @@ module.exports = (db) => {
     db.query(`SELECT * FROM food_items;`)
       .then((data) => {
         const foodItems = data.rows;
-        console.log(foodItems);
         const templateVars = { foodItems };
         res.render("menu", templateVars);
       })

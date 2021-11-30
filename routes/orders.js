@@ -165,5 +165,31 @@ module.exports = (db) => {
     res.render("queue");
   });
 
+  // GET: /api/orders/time/[id]
+  // Gets total order preparation time for a given order
+  router.get("/api/orders/time/:orderId", (req, res) => {
+    const query = `
+      SELECT order_foods.order_id,SUM(food_items.prep_time) as total_order_time
+      FROM order_foods
+      INNER JOIN food_items ON order_foods.food_id = food_items.id
+      WHERE order_foods.order_id = $1
+      GROUP BY order_foods.order_id;
+    `;
+    const values = [req.params.orderId];
+
+    db.query(query, values)
+      .then((data) => {
+      // check if order doesn't exist
+        if (data.rows.length === 0) {
+          return res.status(404).send();
+        }
+        res.status(200).send(data.rows);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
   return router;
 };
+
