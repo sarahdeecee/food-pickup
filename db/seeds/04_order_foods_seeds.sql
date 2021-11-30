@@ -10,3 +10,6 @@ INSERT INTO order_foods (order_id,food_id) VALUES (7,7);
 INSERT INTO order_foods (order_id,food_id) VALUES (8,8);
 INSERT INTO order_foods (order_id,food_id) VALUES (9,9);
 INSERT INTO order_foods (order_id,food_id) VALUES (10,10);
+INSERT INTO order_foods (order_id,food_id) VALUES (1,4);
+INSERT INTO order_foods (order_id,food_id) VALUES (1,5);
+INSERT INTO order_foods (order_id,food_id) VALUES (1,13);
