@@ -43,5 +43,5 @@ VALUES ('Miso Soup',        'Japanese soybean paste soup with mushrooms',      '
 ('Pork Katsu Don', 'Breaded fried pork cutlet on rice',                  'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_katsudon.png', 1800, 15),
 ('Unagi Don',      'Blow-torched barbecued eel on rice',                 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_unadon.png', 2000, 15),
 ('Oyako Don',      'Chicken and egg simmered in sauce over rice',        'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_oyakodon.png', 1500, 15),
-('Ten Don',        'Tempura vegetables and shrimp with sauce over rice', 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_tendon.png', 1500, 15);
+('Ten Don',        'Tempura vegetables and shrimp with sauce over rice', 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_tendon.png', 1500, 15),
 ('Ebi Ten Don',    'Tempura shrimp with sauce over rice',                'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/tendon_ebi.png', 1500, 15);
