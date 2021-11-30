@@ -31,7 +31,7 @@
             <span class="foodname"><%= item.name %></span><span class="fooddescription"><%= item.description %></span>
           </span>
         </span>
-        <span class="price"><%= item.price %></span>
+        <span class="price">$<%= item.price/100 %></span>
       </div>
     <% } %>
   </main>
