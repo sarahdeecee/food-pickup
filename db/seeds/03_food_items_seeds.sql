@@ -12,7 +12,7 @@
 INSERT INTO food_items (name, description, type, picture_url, price, prep_time)
 VALUES ('Miso Soup',        'Japanese soybean paste soup with mushrooms',      'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_misoshiru_nameko.png', 300, 5),
 ('Namerou',          'Minced fish with seasoning',                             'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_namerou.png',          500, 5),
-('Seaweed Salad',    'Seaweed and cucumber salad   ',                          'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_sunomomo.png',         500, 5),
+('Seaweed Salad',    'Seaweed and cucumber salad   ',                          'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_sunomono.png',         500, 5),
 ('Edamame',          'Steamed soybeans with sea salt',                         'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_edamame.png',          600, 5),
 ('Chicken Karaage',  'Deep fried chicken marinated with soy sauce and spices', 'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_karaage_lemon.png',    800, 5),
 ('Takoyaki',         'Round balls of batter with grilled octopus',             'appetizer', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/takoyaki_fune.png',         800, 5),
@@ -43,5 +43,5 @@ VALUES ('Miso Soup',        'Japanese soybean paste soup with mushrooms',      '
 ('Pork Katsu Don', 'Breaded fried pork cutlet on rice',                  'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_katsudon.png', 1800, 15),
 ('Unagi Don',      'Blow-torched barbecued eel on rice',                 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_unadon.png', 2000, 15),
 ('Oyako Don',      'Chicken and egg simmered in sauce over rice',        'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_oyakodon.png', 1500, 15),
-('Ten Don',        'Tempura vegetables and shrimp with sauce over rice', 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_tendon.png', 1500, 15);
+('Ten Don',        'Tempura vegetables and shrimp with sauce over rice', 'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/food_tendon.png', 1500, 15),
 ('Ebi Ten Don',    'Tempura shrimp with sauce over rice',                'donburi', 'https://raw.githubusercontent.com/miged/food-pickup/master/public/images/tendon_ebi.png', 1500, 15);
