@@ -11,6 +11,7 @@ const router  = express.Router();
 module.exports = (db) => {
   // GET: /api/orders/queue
   // Gets the queue of orders
+  // Returns: JSON response
   router.get("/api/orders/queue", (req, res) => {
     const query = `
       SELECT orders.id, users.name as customer, order_timestamp, progress, array_agg(food_items.name) as items
@@ -38,6 +39,7 @@ module.exports = (db) => {
 
   // GET: /api/orders/[id]
   // Gets an order by id
+  // Returns: JSON response
   router.get("/api/orders/:orderId", (req, res) => {
     const query = `
       SELECT orders.*, array_agg(food_items.name) as items
@@ -66,9 +68,9 @@ module.exports = (db) => {
 
   // GET: /api/orders/user/[id]
   // Get all orders from a user
-  router.get("/api/orders/user/:userId", (req, res) => {
+  router.get("/orders/user/:userId", (req, res) => {
     const query = `
-      SELECT orders.id, users.name as customer, order_timestamp, progress, array_agg(food_items.name) as items
+      SELECT orders.*, users.name as customer, progress, array_agg(food_items.name) as items
       FROM orders
       JOIN order_foods ON orders.id = order_foods.order_id
       JOIN food_items ON order_foods.food_id = food_items.id
@@ -84,7 +86,9 @@ module.exports = (db) => {
         data.rows.forEach((row) => {
           row.items = countItems(row.items);
         });
-        res.status(200).send(data.rows);
+        const templateVars = { rows: data.rows };
+        console.log(templateVars);
+        res.render("user_order", templateVars);
       })
       .catch((err) => {
         res.status(400).send(err.message);
@@ -93,6 +97,7 @@ module.exports = (db) => {
 
   // POST: /api/orders
   // Submits an order
+  // Returns: JSON response
   router.post("/api/orders", (req, res) => {
     const query = `
       INSERT INTO orders (customer_id, subtotal, tax)
@@ -133,6 +138,7 @@ module.exports = (db) => {
 
   // PUT: /api/orders/edit/[id]
   // Edit order progress
+  // Returns: JSON response
   router.put("/api/orders/edit/:orderId", (req, res) => {
     const query = `
       UPDATE orders
@@ -161,12 +167,9 @@ module.exports = (db) => {
     return counts;
   };
 
-  router.get("/orders/queue", (req, res) => {
-    res.render("queue");
-  });
-
   // GET: /api/orders/time/[id]
   // Gets total order preparation time for a given order
+  // Returns: JSON response
   router.get("/api/orders/time/:orderId", (req, res) => {
     const query = `
       SELECT order_foods.order_id,SUM(food_items.prep_time) as total_order_time
@@ -190,6 +193,10 @@ module.exports = (db) => {
       });
   });
 
+
+  router.get("/orders/queue", (req, res) => {
+    res.render("queue");
+  });
+
   return router;
 };
-
