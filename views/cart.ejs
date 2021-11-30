@@ -8,10 +8,11 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/cart.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
-  <script type="text/javascript" src="/scripts/cart.js"></script>
+  <script type="text/javascript" src="/scripts/updatecart.js"></script>
 
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -21,23 +22,13 @@
 <%- include('partials/_header') %>
 
 <body>
+  <h2>Current Order</h2>
   <main class="container" id="cart">
-    <h2>Current Order</h2>
-    <% for (let item of cart) { %>
-      <div class="items">
-        <span class="item">
-          <img class="food" src="<%= item.picture_url %>">
-          <span class="foodtext">
-            <span class="foodname"><%= item.name %></span><span class="fooddescription"><%= item.description %></span>
-          </span>
-        </span>
-        <span class="price">$<%= item.price/100 %></span>
-      </div>
-    <% } %>
-  </main>
-  <footer>
-    <button>Checkout</button>
-  </footer>
+
+      <footer>
+        <button class="btn">Checkout</button>
+      </footer>
+    </main>
 </body>
 
 </html>
