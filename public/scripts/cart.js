@@ -1,20 +1,28 @@
 $(document).ready(() => {
   const renderCart = items => {
     for (let item of items) {
-      const $tweet = createCartElement(item);
-      $('#cart').append($tweet);
+      const $item = createCartElement(item);
+      $('#cart').append($item);
     };
   }
   const renderTotals = items => {
-    let total = 0;
+    const subtotal = calcTotal(items);
     const taxRate = 1.13;
+    const tax = total * taxRate;
+    const total = subtotal + tax;
+
+    $('footer').prepend(`
+    Subtotal: ${subtotal}, Tax: ${tax}, Total: ${total}
+    `);
+  }
+  const calcTotal = items => {
+    let total = 0;
     for (let item of items) {
       total +=  item.price;
     };
-    let tax = total * taxRate;
-    $('footer').prepend($totals);
+    return total;
   }
-  const createCartElement = currentOrderObj => {
+  const createCartElement = currentItemObj => {
     const cartPage = $(`
       <div class="items">
         <span class="item">
@@ -28,6 +36,11 @@ $(document).ready(() => {
     `);
     return cartPage;
   };
+
+  // Render cart upon loading page
+  renderCart();
+  // Render total upon loading page
+  renderTotals();
 
 };
 
