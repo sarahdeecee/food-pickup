@@ -1,3 +1,9 @@
+/*
+ * All routes for menu are defined here
+ * Since this file is loaded in server.js into api/menu,
+ *   these routes are mounted onto /menu
+ */
+
 const express = require('express');
 const router  = express.Router();
 
