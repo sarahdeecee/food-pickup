@@ -9,7 +9,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin: 75px 0 75px 0;
+  margin-bottom: 75px;
 }
 
 // For items to be in grid pattern
@@ -32,6 +32,7 @@ div.items {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
   margin: 0 0.5em 0.5em 0.5em;
 }
 
