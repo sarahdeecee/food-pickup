@@ -3,6 +3,7 @@ CREATE TABLE food_items (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
+  type VARCHAR(255) NOT NULL,
   picture_url VARCHAR(255) NOT NULL,
   price INTEGER NOT NULL,
   prep_time INTEGER

@@ -9,16 +9,17 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  // GET: /orders/queue
+  // GET: /api/orders/queue
   // Gets the queue of orders
-  router.get("/queue", (req, res) => {
+  router.get("/api/orders/queue", (req, res) => {
     const query = `
-      SELECT orders.id, customer_id, order_timestamp, progress, array_agg(food_items.name) as items
+      SELECT orders.id, users.name as customer, order_timestamp, progress, array_agg(food_items.name) as items
       FROM orders
       JOIN order_foods ON orders.id = order_foods.order_id
       JOIN food_items ON order_foods.food_id = food_items.id
+      JOIN users ON orders.customer_id = users.id
       WHERE progress NOT LIKE 'Completed'
-      GROUP BY orders.id
+      GROUP BY orders.id, users.name
       ORDER BY order_timestamp
     `;
 
@@ -35,8 +36,9 @@ module.exports = (db) => {
       });
   });
 
-  // GET: /orders/[id]
-  router.get("/:orderId", (req, res) => {
+  // GET: /api/orders/[id]
+  // Gets an order by id
+  router.get("/api/orders/:orderId", (req, res) => {
     const query = `
       SELECT orders.*, array_agg(food_items.name) as items
       FROM orders
@@ -62,9 +64,36 @@ module.exports = (db) => {
       });
   });
 
-  // POST: /orders
+  // GET: /api/orders/user/[id]
+  // Get all orders from a user
+  router.get("/api/orders/user/:userId", (req, res) => {
+    const query = `
+      SELECT orders.id, users.name as customer, order_timestamp, progress, array_agg(food_items.name) as items
+      FROM orders
+      JOIN order_foods ON orders.id = order_foods.order_id
+      JOIN food_items ON order_foods.food_id = food_items.id
+      JOIN users ON orders.customer_id = users.id
+      WHERE orders.customer_id = $1
+      GROUP BY orders.id, users.name
+      ORDER BY order_timestamp
+    `;
+    const values = [req.params.userId];
+
+    db.query(query, values)
+      .then((data) => {
+        data.rows.forEach((row) => {
+          row.items = countItems(row.items);
+        });
+        res.status(200).send(data.rows);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
+  // POST: /api/orders
   // Submits an order
-  router.post("/", (req, res) => {
+  router.post("/api/orders", (req, res) => {
     const query = `
       INSERT INTO orders (customer_id, subtotal, tax)
       VALUES ($1, $2, $3)
@@ -102,15 +131,16 @@ module.exports = (db) => {
     }
   };
 
-  // PUT: /orders/[id]
+  // PUT: /api/orders/edit/[id]
   // Edit order progress
-  router.put("/:orderId", (req, res) => {
+  router.put("/api/orders/edit/:orderId", (req, res) => {
     const query = `
       UPDATE orders
       SET progress = $1
       WHERE id = $2
     `;
     const values = [req.body.progress, req.params.orderId];
+    console.log(values);
 
     db.query(query, values)
       .then((data) => {
@@ -130,6 +160,10 @@ module.exports = (db) => {
 
     return counts;
   };
+
+  router.get("/orders/queue", (req, res) => {
+    res.render("queue");
+  });
 
   return router;
 };
