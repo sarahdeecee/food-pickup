@@ -59,10 +59,6 @@ footer {
   justify-content: center;
   background-color: white;
   font-size: 18pt;
+  gap: 35px;
 }
 
-.menu-cart {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 40px;
-}
