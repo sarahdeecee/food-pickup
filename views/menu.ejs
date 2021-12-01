@@ -25,14 +25,6 @@
         <div>
           <h2>Menu</h2>
         </div>
-        <div>
-          <button type="button" class="btn btn-primary position-relative">
-            Cart
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id=cartcount>
-              0
-            </span>
-          </button>
-        </div>
       </div>
       <% for(let item of foodItems) { %>
         <div class="card mb-3" style="max-width: 500px;">
@@ -60,7 +52,12 @@
         <% } %>
     </div>
     <footer>
-      <a href="#" class="btn btn-primary">Show Cart</a>
+      <button type="button" class="btn btn-primary position-relative">
+        Show Cart
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id=cartcount>
+          0
+        </span>
+      </button>
     </footer>
 </body>
 
