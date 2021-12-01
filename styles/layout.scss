@@ -60,3 +60,9 @@ footer {
   background-color: white;
   font-size: 18pt;
 }
+
+.menu-cart {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
