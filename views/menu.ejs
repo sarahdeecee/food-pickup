@@ -47,7 +47,8 @@
                   <%= foodItems[idx].description%>
                 </p>
                 <p class="card-text">
-                  <large class="text-muted" id="item-price-<%= idx %>">Price : $<%= foodItems[idx].price / 100%>
+                  <large class="text-muted" id="item-price-<%= idx %>">
+                    Price : $<%= foodItems[idx].price / 100 %>
                   </large>
                 </p>
                 <button type="button" value="<%= idx %>" class="btn btn-secondary add-to-cart">Add to Cart</button>

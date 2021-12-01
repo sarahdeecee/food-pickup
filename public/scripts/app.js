@@ -3,7 +3,7 @@ $(document).ready(function () {
   let cartCount = 0;
   let cartItems = [];
 
-  const createItemAndAddToCart = function (value) {
+  const createItemAndAddToCart = function(value) {
     let itemName = $.trim(
       $(`#item-title-${value}`)
         .text()
@@ -18,14 +18,14 @@ $(document).ready(function () {
     cartItems.push({ name: itemName, price: itemPrice, quantity: 1 });
   };
 
-  $(".btn.btn-secondary.add-to-cart").click(function (event) {
+  $(".btn.btn-secondary.add-to-cart").click(function(event) {
     event.preventDefault();
     ++cartCount;
     createItemAndAddToCart($(this).val());
     $("#cartcount").text(cartCount);
   });
 
-  $("#showcart").click(function (event) {
+  $("#showcart").click(function(event) {
     event.preventDefault();
     $.cookie("cartItems", JSON.stringify(cartItems));
 

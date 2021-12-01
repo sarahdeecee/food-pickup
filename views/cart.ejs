@@ -27,37 +27,47 @@
     crossorigin="anonymous"></script>
 </head>
 <%- include('partials/_header') %>
-
   <body>
     <h2 class="text-center">Current Order</h2>
     <main class="container" id="cart">
       <% let total=0; %>
-        <% for (let item of cart) { %>
-          <% total +=item.price * item.quantity; %>
-            <section class="card">
-              <div class="items card-body">
-                <span>
-                  <span class="quantity"><i class="fas fa-plus"></i>
-                    <%= item.quantity %> <i class="fas fa-minus"></i>
-                  </span>
-                  <span class="text-left">
-                    <%= item.name %>
-                  </span>
-                </span>
-                <span class="price text-right">$<%= (item.price/100).toFixed(2) %></span>
-              </div>
-            </section>
-            <% } %>
-              <section class="totals card">
-                <div class="total card-body"><span>Subtotal:</span><span>$<%= (total/100).toFixed(2) %></span></div>
-                <div class="total card-body"><span>Tax:</span><span>$<%= (total/100*0.13).toFixed(2) %></span></div>
-                <div class="total card-footer"><span>Total:</span><span>$<%= (total/100*1.13).toFixed(2) %></span></div>
-              </section>
-              <footer>
-                <form id="checkout" action="/checkout" method="POST">
-                  <button class="btn btn-dark">Checkout</button>
-                </form>
-              </footer>
+      <% for (let item of cart) { %>
+        <% total +=item.price * item.quantity; %>
+        <section class="card">
+          <div class="items card-body">
+            <span>
+              <span class="quantity"><i class="fas fa-plus"></i>
+                <%= item.quantity %> <i class="fas fa-minus"></i>
+              </span>
+              <span class="text-left">
+                <%= item.name %>
+              </span>
+            </span>
+            <span class="price text-right">
+              $<%= item.price %>
+            </span>
+          </div>
+        </section>
+      <% } %>
+      <section class="totals card">
+        <div class="total card-body">
+          <span>Subtotal:</span>
+          <span><%= total.toLocaleString("en-US", {style:"currency", currency:"USD"}) %></span>
+        </div>
+        <div class="total card-body">
+          <span>Tax:</span>
+          <span><%= (total*0.13).toLocaleString("en-US", {style:"currency", currency:"USD"}) %></span>
+        </div>
+        <div class="total card-footer">
+          <span>Total:</span>
+          <span><%= (total*1.13).toLocaleString("en-US", {style:"currency", currency:"USD"}) %></span>
+        </div>
+      </section>
+      <footer>
+        <form id="checkout" action="/checkout" method="POST">
+          <button class="btn btn-dark">Checkout</button>
+        </form>
+      </footer>
     </main>
   </body>
 
