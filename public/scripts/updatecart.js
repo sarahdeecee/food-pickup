@@ -36,11 +36,11 @@ $(document).ready(function() {
   };
 
   // Load tweets by getting array of tweets from /tweets
-  const loadCart = () => {
-    $.ajax('api/cart', { method: 'GET' })
-      .then((data) => renderCart(data));
-  };
+//   const loadCart = () => {
+//     $.ajax('api/cart', { method: 'GET' })
+//       .then((data) => renderCart(data));
+//   };
 
-  // Upon document loading, load cart
-  loadCart();
+//   // Upon document loading, load cart
+//   loadCart();
 });
