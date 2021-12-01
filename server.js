@@ -54,7 +54,7 @@ const cartRoutes = require("./routes/cart");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/api/menu", menuRoutes(db));
+app.use("/api/", menuRoutes(db));
 app.use("/cart", cartRoutes(db));
 app.use("/", ordersRoutes(db));
 

@@ -9,7 +9,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
   // GET: /menu
-  router.get("/", (req, res) => {
+  router.get("/menu", (req, res) => {
     db.query(`SELECT * FROM food_items;`)
       .then((data) => {
         const foodItems = data.rows;
@@ -22,5 +22,11 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  // GET: /contact
+  router.get("/contact", (req, res) => {
+    res.render("contact");
+  });
+
   return router;
 };

@@ -198,5 +198,25 @@ module.exports = (db) => {
     res.render("queue");
   });
 
+
+  // POST: /api/:orderId/:itemId/delete
+  // Remove Item for a given order
+  router.post("/api/:orderId/:itemId/delete", (req, res) => {
+    const query = `DELETE from order_foods where order_id = $1 AND food_id = $2; `;
+    const {orderId, itemId} = req.params;
+
+    db.query(query, [orderId, itemId])
+      .then((data) => {
+      // check if order doesn't exist
+        if (data.rows.length === 0) {
+          return res.status(404).send();
+        }
+        res.redirect('/cart');
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
+
   return router;
 };
