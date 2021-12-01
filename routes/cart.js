@@ -23,6 +23,15 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  // GET: /cart
+  router.post("/", (req, res) => {
+    const cart = req.body.cartItems;
+    const templateVars = { cart };
+    console.log(templateVars);
+    res.render("cart" ,templateVars);
+  });
+
   return router;
 
 };
