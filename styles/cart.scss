@@ -1,5 +1,24 @@
+body {
+  font-size: 18pt;
+}
 section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 1em;
+}
+.price {
+  font-size: medium;
+}
+div.items {
+  margin:0;
+}
+.quantity {
+  margin-right: 1em;
+}
+.container {
+  margin: 1em;
+}
+.fas {
+  cursor: pointer;
 }
