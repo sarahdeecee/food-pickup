@@ -5,7 +5,7 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const sms = require("./sendSms.js");
 
@@ -96,61 +96,35 @@ module.exports = (db) => {
       });
   });
 
-  const createDummyCustomer = function() {
-
-    const customerName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    const phoneNo = 123456;
-    return {customerName, phoneNo};
-  };
   // POST: /api/orders
   // Submits an order
   // Returns: JSON response
   router.post("/api/orders", (req, res) => {
-    const {cart , tax, total} = req.body;
-    console.log(cart,tax,total);
-    const {customerName, phoneNo} = createDummyCustomer();
-    const cusomer_query = `
-    INSERT INTO users (name, phone_number)
-    VALUES ($1, $2 )
-    RETURNING *;
-  `;
-    const values = [customerName , phoneNo];
-    db.query(cusomer_query, values)
-      .then((data) => {
-        //console.log(data.rows);
-        insertOrder(data.rows[0].id,  total,tax, JSON.parse(cart), res);
-      })
-      .catch((err) => {
-        console.log('query error - ', err.message);
-        res.status(400).send(err.message);
-      });
-  });
-  const insertOrder = function(customerId , total, tax, cart, res) {
-
     const query = `
-      INSERT INTO orders (customer_id , subtotal, tax)
-      VALUES ($1, $2, $3 )
+      INSERT INTO orders (customer_id, subtotal, tax)
+      VALUES ($1, $2, $3)
       RETURNING *;
     `;
-    const values = [customerId,  total , tax];
+    console.log(req.body);
+    const values = [req.session.user_id, req.body.subtotal, req.body.tax];
 
     db.query(query, values)
       .then((data) => {
-        //console.log(data.rows);
-        insertOrderFoods(data.rows[0].id, cart, res);
+        console.log(data.rows);
+        insertOrderFoods(data.rows[0].id, req.body.cart, res);
       })
       .catch((err) => {
-        console.log('query error - ', err.message);
+        console.log("query error:", err.message);
         res.status(400).send(err.message);
       });
-
-  };
+  });
 
   const insertOrderFoods = (orderId, cart, res) => {
     const query = `
       INSERT INTO order_foods (order_id, food_id)
       VALUES ($1, $2);
     `;
+
     for (const item of cart) {
       console.log(item);
       const values = [orderId, item.id];
@@ -159,7 +133,7 @@ module.exports = (db) => {
           res.status(200).send();
         })
         .catch((err) => {
-          console.log('query error:', err.message);
+          console.log("query error:", err.message);
           res.status(400).send(err.message);
         });
     }
@@ -215,7 +189,7 @@ module.exports = (db) => {
 
     db.query(query, values)
       .then((data) => {
-      // check if order doesn't exist
+        // check if order doesn't exist
         if (data.rows.length === 0) {
           return res.status(404).send();
         }
@@ -226,25 +200,22 @@ module.exports = (db) => {
       });
   });
 
-
   router.get("/orders/queue", (req, res) => {
     res.render("queue");
   });
 
-
   // POST: /api/:orderId/:itemId/delete
   // Remove Item for a given order
   router.post("/api/:orderId/:itemId/delete", (req, res) => {
-    const query = `DELETE from order_foods where order_id = $1 AND food_id = $2; `;
-    const {orderId, itemId} = req.params;
+    const query = `
+      DELETE FROM order_foods
+      WHERE order_id = $1 AND food_id = $2;
+    `;
+    const { orderId, itemId } = req.params;
 
     db.query(query, [orderId, itemId])
       .then((data) => {
-      // check if order doesn't exist
-        if (data.rows.length === 0) {
-          return res.status(404).send();
-        }
-        res.redirect('/cart');
+        res.redirect("/cart");
       })
       .catch((err) => {
         res.status(400).send(err.message);

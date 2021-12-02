@@ -1,13 +1,13 @@
 // Client facing scripts here
-$(document).ready(function() {
+$(document).ready(function () {
   let cartCount = 0;
   let cartItems = [];
 
-  const loadCart = function() {
+  const loadCart = function () {
     $.ajax(`/api/cart`, {
       method: "GET",
       contentType: "application/json",
-      success: function(data) {
+      success: function (data) {
         console.log(data);
         cartItems = data;
         cartCount = data.length;
@@ -17,7 +17,7 @@ $(document).ready(function() {
   };
   loadCart();
 
-  const createItemAndAddToCart = function(value) {
+  const createItemAndAddToCart = function (value) {
     let itemName = $.trim(
       $(`#item-title-${value}`)
         .text()
@@ -35,17 +35,22 @@ $(document).ready(function() {
         .replace(/\r?\n|\r/g, " ")
         .replace(/[^0-9]/g, "")
     );
-    cartItems.push({ "id": itemId, name: itemName, price: itemPrice, quantity: 1 });
+    cartItems.push({
+      id: itemId,
+      name: itemName,
+      price: itemPrice,
+      quantity: 1,
+    });
   };
 
-  $(".btn.btn-secondary.add-to-cart").click(function(event) {
+  $(".btn.btn-secondary.add-to-cart").click(function (event) {
     event.preventDefault();
     ++cartCount;
     createItemAndAddToCart($(this).val());
     $("#cartcount").text(cartCount);
   });
 
-  $("#showcart").click(function(event) {
+  $("#showcart").click(function (event) {
     event.preventDefault();
 
     console.log(cartItems);
@@ -55,13 +60,13 @@ $(document).ready(function() {
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ cartItems }),
-      success: function() {
+      success: function () {
         $(location).attr("href", "/cart");
       },
     });
   });
 
-  $("#clearcart").click(function(event) {
+  $("#clearcart").click(function (event) {
     event.preventDefault();
     cartCount = 0;
     cartItems = [];
@@ -69,39 +74,41 @@ $(document).ready(function() {
     $("#cartcount").text(cartCount);
   });
 
-  $("#checkout").click(function(event) {
-
+  $("#checkout").click(function (event) {
     event.preventDefault();
-    let cartData = $.cookie("cartItems");
-    let {tax , subTotal} = getSubTotalAndTax();
+    let cartData = JSON.parse($.cookie("cartItems"));
+    let { tax, subTotal } = getSubTotalAndTax();
 
-    console.log(tax,subTotal,cartData);
+    console.log(tax, subTotal, cartData);
     $.ajax(`/api/orders`, {
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({"cart": cartData , "tax" : tax , "total": subTotal}),
-      success: function() {
+      data: JSON.stringify({ cart: cartData, tax: tax, subtotal: subTotal }),
+      success: function () {
         $(location).attr("href", "/");
       },
     });
-
   });
 
-  const getSubTotalAndTax = function() {
-    const tax = Number($.trim($(`#cart-tax`)
-      .text()
-      .replace(/\r?\n|\r/g, " ")
-      .replace(/[^0-9]/g, "")
-    ));
+  const getSubTotalAndTax = function () {
+    const tax = Number(
+      $.trim(
+        $(`#cart-tax`)
+          .text()
+          .replace(/\r?\n|\r/g, " ")
+          .replace(/[^0-9]/g, "")
+      )
+    );
 
-    const subTotal = Number($.trim($(`#cart-sub-total`)
-      .text()
-      .replace(/\r?\n|\r/g, " ")
-      .replace(/[^0-9]/g, "")
-    ));
+    const subTotal = Number(
+      $.trim(
+        $(`#cart-sub-total`)
+          .text()
+          .replace(/\r?\n|\r/g, " ")
+          .replace(/[^0-9]/g, "")
+      )
+    );
 
-    return {tax, subTotal};
+    return { tax, subTotal };
   };
-
-
 });
