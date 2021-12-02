@@ -25,6 +25,7 @@ module.exports = (db) => {
   // DELETE: /api/cart/clear
   router.delete("/api/cart/clear", (req, res) => {
     req.session.cart = [];
+    res.send(req.session.cart);
   });
 
   return router;
