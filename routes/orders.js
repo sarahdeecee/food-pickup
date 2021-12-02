@@ -95,36 +95,64 @@ module.exports = (db) => {
       });
   });
 
+  const createDummyCustomer = function() {
+
+    const customerName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const phoneNo = 123456;
+    return {customerName, phoneNo};
+  };
   // POST: /api/orders
   // Submits an order
   // Returns: JSON response
   router.post("/api/orders", (req, res) => {
-    const query = `
-      INSERT INTO orders (customer_id, subtotal, tax)
-      VALUES ($1, $2, $3)
-      RETURNING *;
-    `;
-    const values = [req.body.user_id, req.body.subtotal, req.body.tax];
-
-    db.query(query, values)
+    const {cart , tax, total} = req.body;
+    console.log(cart,tax,total);
+    const {customerName, phoneNo} = createDummyCustomer();
+    const cusomer_query = `
+    INSERT INTO users (name, phone_number)
+    VALUES ($1, $2 )
+    RETURNING *;
+  `;
+    const values = [customerName , phoneNo];
+    db.query(cusomer_query, values)
       .then((data) => {
-        console.log(data.rows);
-        insertOrderFoods(data.rows[0].id, req.body.items, res);
+        //console.log(data.rows);
+        insertOrder(data.rows[0].id,  total,tax, JSON.parse(cart), res);
       })
       .catch((err) => {
-        console.log('query error:', err.message);
+        console.log('query error - ', err.message);
         res.status(400).send(err.message);
       });
   });
+  const insertOrder = function(customerId , total, tax, cart, res) {
 
-  const insertOrderFoods = (orderId, foodIds, res) => {
+    const query = `
+      INSERT INTO orders (customer_id , subtotal, tax)
+      VALUES ($1, $2, $3 )
+      RETURNING *;
+    `;
+    const values = [customerId,  total , tax];
+
+    db.query(query, values)
+      .then((data) => {
+        //console.log(data.rows);
+        insertOrderFoods(data.rows[0].id, cart, res);
+      })
+      .catch((err) => {
+        console.log('query error - ', err.message);
+        res.status(400).send(err.message);
+      });
+
+  };
+
+  const insertOrderFoods = (orderId, cart, res) => {
     const query = `
       INSERT INTO order_foods (order_id, food_id)
       VALUES ($1, $2);
     `;
-
-    for (const foodId of foodIds) {
-      const values = [orderId, foodId];
+    for (const item of cart) {
+      console.log(item);
+      const values = [orderId, item.id];
       db.query(query, values)
         .then((data) => {
           res.status(200).send();

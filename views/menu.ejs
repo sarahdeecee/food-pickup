@@ -52,6 +52,9 @@
                     Price : $<%= foodItems[idx].price / 100 %>
                   </large>
                 </p>
+                <p id="item-id-<%= idx %>" hidden>
+                  <%= foodItems[idx].id%>
+                </p>
                 <button type="button" value="<%= idx %>" class="btn btn-secondary add-to-cart">Add to Cart</button>
               </div>
             </div>
