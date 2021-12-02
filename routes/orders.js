@@ -6,7 +6,8 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
+const sms = require("./sendSms.js");
 
 module.exports = (db) => {
   // GET: /api/orders/queue
@@ -172,16 +173,20 @@ module.exports = (db) => {
       UPDATE orders
       SET progress = $1
       WHERE id = $2
+      RETURNING *
     `;
     const values = [req.body.progress, req.params.orderId];
-    console.log(values);
 
     db.query(query, values)
       .then((data) => {
+        if (req.body.progress === "Ready") {
+          sms.sendSms(data.rows[0].customer_id, db);
+        }
         res.status(200).send(data.rows[0]);
       })
       .catch((err) => {
         res.status(400).send(err.message);
+        console.log(err.message);
       });
   });
 
