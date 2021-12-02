@@ -11,6 +11,7 @@ module.exports = (db) => {
   // GET: /api/cart
   router.get("/api/cart", (req, res) => {
     const { cart } = req.session;
+    console.log(cart);
     res.send(cart);
   });
 
@@ -19,6 +20,11 @@ module.exports = (db) => {
     const cart = req.body.cartItems;
     req.session.cart = cart;
     res.render("cart", { cart });
+  });
+
+  // DELETE: /api/cart/clear
+  router.delete("/api/cart/clear", (req, res) => {
+    req.session.cart = [];
   });
 
   return router;
