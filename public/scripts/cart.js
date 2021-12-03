@@ -71,13 +71,14 @@ $(document).ready(function() {
 
   const showCartModal = function(cartItems) {
     renderCart(cartItems);
-    $("#cart").on("show.bs.modal", function(event) {
-      let totalsObj = calcTotals(cartItems);
-      $(this).find("#subtotal").text((totalsObj.subtotal).toLocaleString("en-US", {style:"currency", currency:"USD"}));
-      $(this).find("#tax").text((totalsObj.tax).toLocaleString("en-US", {style:"currency", currency:"USD"}));
-      $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
-    });
+    $("#cart").modal("show");
   };
+  $("#cart").on("show.bs.modal", function(event) {
+    let totalsObj = calcTotals(cartItems);
+    $(this).find("#subtotal").text((totalsObj.subtotal).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+    $(this).find("#tax").text((totalsObj.tax).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+    $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+  });
 
   $(".btn.btn-secondary.add-to-cart").click(function(event) {
     event.preventDefault();
@@ -109,21 +110,18 @@ $(document).ready(function() {
     cartCount = 0;
     $("#cartcount").text(0);
     $("#cartbody").empty();
-    $("#cart").on("show.bs.modal", function(event) {
-      let totalsObj = {subtotal: 0, tax: 0, total: 0};
-      $(this).find("#subtotal").text((totalsObj.subtotal).toLocaleString("en-US", {style:"currency", currency:"USD"}));
-      $(this).find("#tax").text((totalsObj.tax).toLocaleString("en-US", {style:"currency", currency:"USD"}));
-      $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
-    });
+
+    let totalsObj = {subtotal: 0, tax: 0, total: 0};
+    $(this).find("#subtotal").text((totalsObj.subtotal).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+    $(this).find("#tax").text((totalsObj.tax).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+    $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
   });
 
   $("#checkout").click(function(event) {
-    event.preventDefault();
     let cart = JSON.parse($.cookie("cartItems"));
     let totalsObj = calcTotals(cart);
     let subtotal = totalsObj.subtotal;
     let tax = totalsObj.subtotal;
-    let total = totalsObj.total;
 
     $.ajax(`/api/orders`, {
       method: "POST",
