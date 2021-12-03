@@ -80,7 +80,7 @@ $(document).ready(function() {
     $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
   });
 
-  $(".btn.btn-secondary.add-to-cart").click(function(event) {
+  $(".add-to-cart").click(function(event) {
     event.preventDefault();
     cartCount++;
     createItemAndAddToCart($(this).val());
