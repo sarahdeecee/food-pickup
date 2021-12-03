@@ -19,7 +19,7 @@ module.exports = (db) => {
   router.post("/cart", (req, res) => {
     const cart = req.body.cartItems;
     req.session.cart = cart;
-    res.render("cart", { cart });
+    // res.render("cart", { cart });
   });
 
   // DELETE: /api/cart/clear

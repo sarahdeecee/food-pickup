@@ -8,7 +8,6 @@ $(document).ready(function() {
       method: "GET",
       contentType: "application/json",
       success: (data) => {
-        console.log(data);
         cartItems = data;
         cartCount = data.length;
         $("#cartcount").text(cartCount);
@@ -43,6 +42,43 @@ $(document).ready(function() {
     });
   };
 
+  const createCartElement = (item) => {
+    const cartPage = $(`
+      <section class="card">
+        <div class="items card-body">
+          <span>
+            <span class="quantity">
+              ${item.quantity}
+            </span>
+            <span class="text-left">
+              ${item.name}
+            </span>
+          </span>
+          <span class="price text-right">$${item.price}.00</span>
+        </div>
+      </section>
+    `);
+    return cartPage;
+  };
+
+  const renderCart = (items) => {
+    $("#cartbody").empty();
+    for (let item of items) {
+      let $item = createCartElement(item);
+      $("#cartbody").append($item);
+    }
+  };
+
+  const showCartModal = function (cartItems) {
+    renderCart(cartItems);
+    $("#cart").on("show.bs.modal", function(event) {
+      let totalsObj = calcTotals(cartItems);
+      $(this).find("#subtotal").text((totalsObj.subtotal).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+      $(this).find("#tax").text((totalsObj.tax).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+      $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+    });
+  }
+
   $(".btn.btn-secondary.add-to-cart").click(function(event) {
     event.preventDefault();
     cartCount++;
@@ -53,17 +89,15 @@ $(document).ready(function() {
   $("#showcart").click(function(event) {
     event.preventDefault();
 
-    console.log(cartItems);
     $.cookie("cartItems", JSON.stringify(cartItems));
 
     $.ajax(`/cart`, {
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ cartItems }),
-      success: () => {
-        $(location).attr("href", "/cart");
-      },
     });
+    showCartModal(cartItems);
+
   });
 
   $("#clearcart").click(function(event) {
@@ -71,13 +105,25 @@ $(document).ready(function() {
     $.ajax(`/api/cart/clear`, {
       method: "DELETE",
     });
+    cartItems.length = 0;
+    cartCount = 0;
     $("#cartcount").text(0);
+    $("#cartbody").empty();
+    $("#cart").on("show.bs.modal", function(event) {
+      let totalsObj = {subtotal: 0, tax: 0, total: 0};
+      $(this).find("#subtotal").text((totalsObj.subtotal).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+      $(this).find("#tax").text((totalsObj.tax).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+      $(this).find("#total").text((totalsObj.total).toLocaleString("en-US", {style:"currency", currency:"USD"}));
+    });
   });
 
   $("#checkout").click(function(event) {
     event.preventDefault();
     let cart = JSON.parse($.cookie("cartItems"));
-    let { tax, subtotal } = getSubTotalAndTax();
+    let totalsObj = calcTotals(cart);
+    let subtotal = totalsObj.subtotal;
+    let tax = totalsObj.subtotal;
+    let total = totalsObj.total;
 
     $.ajax(`/api/orders`, {
       method: "POST",
@@ -89,25 +135,15 @@ $(document).ready(function() {
     });
   });
 
-  const getSubTotalAndTax = function() {
-    const tax = Number(
-      $.trim(
-        $(`#cart-tax`)
-          .text()
-          .replace(/\r?\n|\r/g, " ")
-          .replace(/[^0-9]/g, "")
-      )
-    );
-
-    const subTotal = Number(
-      $.trim(
-        $(`#cart-sub-total`)
-          .text()
-          .replace(/\r?\n|\r/g, " ")
-          .replace(/[^0-9]/g, "")
-      )
-    );
-
-    return { tax, subTotal };
+  const calcTotals = function(cartItems) {
+    const totalObj = {};
+    let sum = 0;
+    for (let item of cartItems) {
+      sum += item.price * item.quantity;
+    }
+    totalObj.subtotal = sum;
+    totalObj.tax = (sum * 0.13);
+    totalObj.total = (sum * 1.13);
+    return totalObj;
   };
 });
