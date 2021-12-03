@@ -70,7 +70,10 @@ $(document).ready(function() {
     event.preventDefault();
     cartCount = 0;
     cartItems = [];
-    $.cookie("cartItems", JSON.stringify(cartItems));
+
+    $.ajax(`/api/cart/clear`, {
+      method: "DELETE",
+    });
     $("#cartcount").text(cartCount);
   });
 
