@@ -1,0 +1,13 @@
+@media only screen and (max-width: 420px) {
+
+}
+@media only screen and (min-width: 1024px) {
+  // For items to be in grid pattern
+  .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+}
