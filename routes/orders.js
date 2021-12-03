@@ -8,6 +8,7 @@
 const express = require("express");
 const router = express.Router();
 const sms = require("./sendSms.js");
+let format = require('pg-format');
 
 module.exports = (db) => {
   // GET: /api/orders/queue
@@ -105,12 +106,11 @@ module.exports = (db) => {
       VALUES ($1, $2, $3)
       RETURNING *;
     `;
-    console.log(req.body);
+    //console.log(req.body);
     const values = [req.session.user_id, req.body.subtotal, req.body.tax];
 
     db.query(query, values)
       .then((data) => {
-        console.log(data.rows);
         insertOrderFoods(data.rows[0].id, req.body.cart, res);
       })
       .catch((err) => {
@@ -120,23 +120,23 @@ module.exports = (db) => {
   });
 
   const insertOrderFoods = (orderId, cart, res) => {
-    const query = `
-      INSERT INTO order_foods (order_id, food_id)
-      VALUES ($1, $2);
-    `;
 
-    for (const item of cart) {
-      console.log(item);
-      const values = [orderId, item.id];
-      db.query(query, values)
-        .then((data) => {
-          res.status(200).send();
-        })
-        .catch((err) => {
-          console.log("query error:", err.message);
-          res.status(400).send(err.message);
-        });
+    let myNestedArray = [];
+    for (let item of cart) {
+      myNestedArray.push([orderId , item.id]);
     }
+    let query = format('INSERT INTO order_foods (order_id, food_id) VALUES %L', myNestedArray);
+    console.log(query);
+
+    db.query(query)
+      .then((data) => {
+        res.status(200).send();
+      })
+      .catch((err) => {
+        console.log("query error:", err.stack);
+        res.status(400).send(err.message);
+      });
+
   };
 
   // PUT: /api/orders/edit/[id]
