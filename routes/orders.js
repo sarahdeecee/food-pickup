@@ -130,7 +130,7 @@ module.exports = (db) => {
 
     db.query(query)
       .then((data) => {
-        res.status(200).send();
+        res.status(200).json({orderId});
       })
       .catch((err) => {
         console.log("query error:", err.stack);
@@ -174,32 +174,6 @@ module.exports = (db) => {
     return counts;
   };
 
-  // GET: /api/orders/time/[id]
-  // Gets total order preparation time for a given order
-  // Returns: JSON response
-  router.get("/api/orders/time/:orderId", (req, res) => {
-    const query = `
-      SELECT order_foods.order_id,SUM(food_items.prep_time) as total_order_time
-      FROM order_foods
-      INNER JOIN food_items ON order_foods.food_id = food_items.id
-      WHERE order_foods.order_id = $1
-      GROUP BY order_foods.order_id;
-    `;
-    const values = [req.params.orderId];
-
-    db.query(query, values)
-      .then((data) => {
-        // check if order doesn't exist
-        if (data.rows.length === 0) {
-          return res.status(404).send();
-        }
-        res.status(200).send(data.rows);
-      })
-      .catch((err) => {
-        res.status(400).send(err.message);
-      });
-  });
-
   router.get("/orders/queue", (req, res) => {
     res.render("queue");
   });
@@ -222,5 +196,31 @@ module.exports = (db) => {
       });
   });
 
+  // GET: /api/order/confirm
+  // getd order Id and preparation time and redirects to confirm page.
+  router.get("/api/:orderId/confirm", (req, res) => {
+
+    const query = `
+    SELECT order_foods.order_id,SUM(food_items.prep_time) as total_order_time
+      FROM order_foods
+      INNER JOIN food_items ON order_foods.food_id = food_items.id
+      WHERE order_foods.order_id = $1
+      GROUP BY order_foods.order_id;
+    `;
+    const {orderId} = req.params;
+    console.log(orderId);
+    db.query(query, [orderId])
+      .then((data) => {
+        // check if order doesn't exist
+        if (data.rows.length === 0) {
+          return res.status(404).send();
+        }
+        const templateVars =  data.rows[0];
+        res.render("orderconfirm", templateVars);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
   return router;
 };

@@ -83,11 +83,13 @@ $(document).ready(function() {
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ cart, tax, subtotal }),
-      success: () => {
-        $(location).attr("href", "/");
+      success: (data) => {
+        const {orderId} = data;
+        $(location).attr("href", `/api/${orderId}/confirm`);
       },
     });
   });
+
 
   const getSubTotalAndTax = function() {
     const tax = Number(
