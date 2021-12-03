@@ -9,22 +9,37 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-bottom: 75px;
 }
 
-// For items to be in grid pattern
-// .items {
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   text-align: center;
-// }
+main {
+  padding: 1em 0 60px 0;
+}
 
 // Section before the header
 section {
   width: 100%;
   padding: 0.5em
+}
+
+footer.menufooter {
+  display: flex;
+  flex-direction: column;
+  height: 60px;
+  align-items: center;
+  bottom: 40px;
+}
+
+.cartbtn {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+// For each item picture
+img.foodpic {
+  max-width: 200px;
+  height: auto;
+  padding-right: 1em;
 }
 
 // Contains the item (image, name/description, price)
@@ -41,13 +56,6 @@ div.items {
 span.item {
   display: flex;
   flex-direction: row;
-}
-
-// For each item picture
-img.food {
-  width: 150px;
-  height: 150px;
-  padding-right: 0.5em;
 }
 
 // Contains food name and description
@@ -73,4 +81,8 @@ img.food {
 
 .orders-container {
   margin-top: 1em;
+}
+
+#showcart, #clearcart {
+  min-width: 105px;
 }

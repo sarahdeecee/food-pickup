@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../styles/main.css" type="text/css" />
   <link rel="stylesheet" href="../styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="../styles/cart.css" type="text/css" />
+  <link rel="stylesheet" href="../styles/responsive.css" type="text/css" />
 
   <script type="text/javascript" src="../vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="../scripts/app.js"></script>
@@ -35,21 +36,21 @@
 
 <body>
   <%- include('partials/_header') %>
+  <main style="padding-bottom: 100px;">
     <!-- Main content here -->
     <div class="container">
-      <div class="menu-cart">
-        <div>
-          <h2>Menu</h2>
-        </div>
+      <div>
+        <h2>Menu</h2>
       </div>
+      <div class="card-columns">
       <% for(let idx=0; idx < foodItems.length; idx++) { %>
-        <div class="card mb-3" style="max-width: 500px;">
-          <div class=" row g-0">
-            <div class="col-md-4">
-              <img src="<%= foodItems[idx].picture_url %>" class="img-fluid rounded-start" alt="...">
+        <div class="card mb-3 card-body">
+          <div class="row g-0">
+            <div class="col-md-4 text-center">
+              <img src="<%= foodItems[idx].picture_url %>" class="foodpic rounded-start" alt="<%= foodItems[idx].description %>">
             </div>
             <div class="col-md-8">
-              <div class="card-body">
+              <div class="text-left">
                 <h5 class="card-title" id="item-title-<%= idx %>">
                   <%= foodItems[idx].name%>
                 </h5>
@@ -69,18 +70,25 @@
             </div>
           </div>
         </div>
-        <% } %>
+      <% } %>
+      </div>
     </div>
-    <footer>
-
-      <button type="button" class="btn btn-primary position-relative" id="showcart" data-bs-toggle="modal" data-bs-target="#cart" data-title="Current Order">
-        Show Cart
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id=cartcount>
-          0
-        </span>
-      </button>
-      <button type="button" class="btn btn-primary position-relative" id="clearcart"> Clear Cart</button>
+    <footer class="menufooter">
+      <div class="row justify-content-center text-center w-100">
+        <div class="col-3 justify-content-center">
+          <button type="button" class="btn btn-light position-relative" id="showcart" data-bs-toggle="modal" data-bs-target="#cart" data-title="Current Order">
+            Show Cart
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id=cartcount>
+              0
+            </span>
+          </button>
+        </div>
+        <div class="col-3 justify-content-center">
+          <button type="button" class="btn btn-light position-relative" id="clearcart">Clear Cart</button>
+        </div>
+      </div>
     </footer>
+    <%- include('partials/_footer') %>
 
     <!-- Cart Modal -->
     <div id="cart" class="modal fade" tabindex="-1">
@@ -111,12 +119,13 @@
               </section>
             </div>
             <div class="modal-footer text-center">
-                <button id="checkout" type="button" class="btn btn-primary w-100">Checkout</button>
+              <button id="checkout" type="button" class="btn btn-dark w-100 ">Checkout</button>
             </div>
           </form>
         </div>
       </div>
     </div>
+  </main>
 </body>
 
 </html>
