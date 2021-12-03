@@ -7,7 +7,7 @@ $(document).ready(function() {
     $.ajax(`/api/cart`, {
       method: "GET",
       contentType: "application/json",
-      success: function(data) {
+      success: (data) => {
         console.log(data);
         cartItems = data;
         cartCount = data.length;
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
   $(".btn.btn-secondary.add-to-cart").click(function(event) {
     event.preventDefault();
-    ++cartCount;
+    cartCount++;
     createItemAndAddToCart($(this).val());
     $("#cartcount").text(cartCount);
   });
@@ -60,7 +60,7 @@ $(document).ready(function() {
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ cartItems }),
-      success: function() {
+      success: () => {
         $(location).attr("href", "/cart");
       },
     });
@@ -68,27 +68,22 @@ $(document).ready(function() {
 
   $("#clearcart").click(function(event) {
     event.preventDefault();
-    cartCount = 0;
-    cartItems = [];
-
     $.ajax(`/api/cart/clear`, {
       method: "DELETE",
     });
-    $("#cartcount").text(cartCount);
+    $("#cartcount").text(0);
   });
 
   $("#checkout").click(function(event) {
     event.preventDefault();
-    let cartData = JSON.parse($.cookie("cartItems"));
-    let { tax, subTotal } = getSubTotalAndTax();
+    let cart = JSON.parse($.cookie("cartItems"));
+    let { tax, subtotal } = getSubTotalAndTax();
 
-    console.log(tax, subTotal, cartData);
     $.ajax(`/api/orders`, {
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({ cart: cartData, tax: tax, subtotal: subTotal }),
-      success: function(data) {
-        console.log("cart file ",data);
+      data: JSON.stringify({ cart, tax, subtotal }),
+      success: () => {
         $(location).attr("href", "/");
       },
     });
