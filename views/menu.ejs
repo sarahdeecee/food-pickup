@@ -41,30 +41,34 @@
       <div>
         <h2>Menu</h2>
       </div>
-      <div class="card-columns">
+      <div class="row row-cols-1 row-cols-md-2 g-3">
       <% for(let idx=0; idx < foodItems.length; idx++) { %>
-        <div class="card mb-3 card-body">
-          <div class="row g-0">
-            <div class="col-md-4 text-center">
-              <img src="<%= foodItems[idx].picture_url %>" class="foodpic rounded-start" alt="<%= foodItems[idx].description %>">
-            </div>
-            <div class="col-md-8">
-              <div class="text-left">
-                <h5 class="card-title" id="item-title-<%= idx %>">
-                  <%= foodItems[idx].name%>
-                </h5>
-                <p class="card-text" id="item-desc-<%= idx %>">
-                  <%= foodItems[idx].description%>
-                </p>
-                <p class="card-text">
-                  <large class="text-muted" id="item-price-<%= idx %>">
-                    Price : $<%= foodItems[idx].price / 100 %>
-                  </large>
-                </p>
-                <p id="item-id-<%= idx %>" hidden>
-                  <%= foodItems[idx].id%>
-                </p>
-                <button type="button" value="<%= idx %>" class="btn btn-secondary add-to-cart">Add to Cart</button>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <div class="row g-0">
+                <div class="col-md-6 text-center">
+                  <img src="<%= foodItems[idx].picture_url %>" class="foodpic rounded-start" alt="<%= foodItems[idx].description %>">
+                </div>
+                <div class="col-md-6">
+                  <div class="text-left">
+                    <h5 class="card-title" id="item-title-<%= idx %>">
+                      <%= foodItems[idx].name%>
+                    </h5>
+                    <p class="card-text" id="item-desc-<%= idx %>">
+                      <%= foodItems[idx].description%>
+                    </p>
+                    <p class="card-text">
+                      <large class="text-muted" id="item-price-<%= idx %>">
+                        Price : $<%= foodItems[idx].price / 100 %>
+                      </large>
+                    </p>
+                    <p id="item-id-<%= idx %>" hidden>
+                      <%= foodItems[idx].id%>
+                    </p>
+                    <button type="button" value="<%= idx %>" class="btn btn-secondary add-to-cart">Add to Cart</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
